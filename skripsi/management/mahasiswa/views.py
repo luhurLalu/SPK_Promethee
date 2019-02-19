@@ -29,7 +29,7 @@ class ListMahasiswaView(View):
 class ListHasilRekomendasiMahasiswa(View):
     def get(self, request):        
         template = 'mahasiswa/data_rekomendasi.html'
-        data_rekomendasi = helpers.Nilai(mhs).as_matrix()
+        data_rekomendasi = helpers.Induk()[0].as_matrix()
         data = { 
             'data_rekomendasi': data_rekomendasi
         }
@@ -38,7 +38,7 @@ class ListHasilRekomendasiMahasiswa(View):
 class ListAkademikMahasiswa(View):
     def get(self,request):        
         template = 'mahasiswa/kriteria/akademik.html'        
-        akademik = helpers.Akademik(mhs).as_matrix()
+        akademik = helpers.Induk()[1].as_matrix()
         data = {            
             'akademik' : akademik
         }
@@ -47,7 +47,7 @@ class ListAkademikMahasiswa(View):
 class ListTestMahasiswa(View):
     def get(self,request):                
         template = 'mahasiswa/kriteria/tes_dasar.html'
-        tesdasar = helpers.TesDasar(mhs).as_matrix()        
+        tesdasar = helpers.Induk()[2].as_matrix()        
         data = {            
             'tesdasar' : tesdasar
         }
@@ -56,9 +56,9 @@ class ListTestMahasiswa(View):
 class ListDetailMahasiswa(View):
     def get(self,request,id):        
         template = 'mahasiswa/detail_promethee.html' 
-        pr = helpers.Perangkingan(mhs)         
+        pr = helpers.Induk()[3]
         detail_mahasiswa = pr[int(id)-1].as_matrix()        
-        nama_mhs = helpers.Orang(mhs).as_matrix()[0][int(id)-1] 
+        nama_mhs = helpers.Induk()[4].as_matrix()[0][int(id)-1] 
         # mhs = Mahasiswa.objects.get(id=id)
         data = {      
 
