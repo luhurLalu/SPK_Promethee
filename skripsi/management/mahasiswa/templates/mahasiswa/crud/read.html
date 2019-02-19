@@ -1,0 +1,246 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SPK | Mahasiswa</title>
+  {% include 'layout/dashboard/head.html' %}
+</head>
+<body class="theme-red">
+  <div class="page-loader-wrapper">
+    <div class="loader">
+      <div class="preloader">
+        <div class="spinner-layer pl-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <p>Please wait...</p>
+    </div>
+  </div>
+  {% include 'layout/dashboard/header.html' %}
+  {% include 'layout/dashboard/sidebar.html' %}
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12 col-md-offset-0">
+       <section class="content-header col-md-12 col-sm-0">
+        <div class="col-md-12 col-sm-0">
+          <ol class="breadcrumb breadcrumb-bg-grey">
+            <li>
+            <a href="{% url 'mahasiswa:mahasiswa' %}">
+              <i class="material-icons">person</i>Mahasiswa</a>
+            </li>
+            <li class="active">{{mahasiswa.nama}}</li>
+          </ol>
+        </div>
+        </section>     
+        <div class="box box-success">
+          <div class="box-body">
+            <div class="col-md-12 col-sm-0">
+              <div class="container-fluid">          
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                      <div class="header">                        
+                        <h2><strong>Biodata Mahasiswa</strong></h2>                      
+                      </div>
+                      <div class="body">
+                        <div class="row clearfix js-sweetalert">
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                              <tr>
+                                <td style="width: 30%">Nim</td>
+                                <td style="text-transform:uppercase">{{mahasiswa.nim}}</td>
+                              </tr>    
+                              <tr>
+                                <td style="width: 30%">Nama</td>
+                                <td style="text-transform:uppercase">{{mahasiswa.nama}}</td>
+                              </tr>                 
+                              <tr>
+                                <td style="width: 30%">Jenis Kelamin</td>
+                                <td style="text-transform:uppercase">{{mahasiswa.jenis_kelamin}}</td>
+                              </tr>      
+                              <tr>
+                                <td style="width: 30%">Tanggal Lahir</td>
+                                <td>{{mahasiswa.tgl_lahir}}</td>
+                              </tr>      
+                              <tr>
+                                <td style="width: 30%">Agama</td>
+                                <td style="text-transform:uppercase">{{mahasiswa.agama}}</td>
+                              </tr>         
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container-fluid">          
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                      <div class="header">
+                        <h2><strong>Tes Dasar</strong></h2>                           
+                      </div>
+                      <div class="body">
+                        <div class="row clearfix js-sweetalert">
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                            
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                              <tr>
+                                <td style="width: 30%">Tes Multimedia</td>                              
+                                <td>{{mahasiswa.tesdasars.NilaiMultimedia}}</td>
+                              </tr>                             
+                              <tr>
+                                <td style="width: 30%">Tes Jaringan</td>                            
+                                <td>{{mahasiswa.tesdasars.NilaiJaringan}}</td>
+                              </tr>   
+                              <tr>
+                                <td style="width: 30%">Tes RPL</td>                              
+                                <td>{{mahasiswa.tesdasars.NilaiRPL}}</td>
+                              </tr>                     
+                            </table>                           
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <section class="content"> -->
+                <div class="container-fluid">          
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="header">
+                          <h2><strong>Nilai Akademik</strong></h2>                           
+                        </div>
+                        <div class="body">
+                          <div class="row clearfix js-sweetalert">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                              <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <tr>
+                                  <td style="width: 75%">Interaksi Manusia & Komputer</td>
+                                  <td align="center">{{mahasiswa.multimedias.IMK}}</td>
+                                </tr>                                                     
+                                <tr>
+                                  <td style="width: 75%">Artificial Intelligent</td>                                
+                                  <td align="center">{{mahasiswa.rpls.ArtificialIntelligent}}</td>
+                                </tr>    
+                                <tr>
+                                  <td style="width: 75%">Grafika Komputer</td>                                
+                                  <td align="center">{{mahasiswa.multimedias.GrafikaKomputer}}</td>
+                                </tr>                                                                
+                                <tr>
+                                  <td style="width: 75%">Praktikum Grafika Komputer</td>                                
+                                  <td align="center">{{mahasiswa.multimedias.PrakGrafikaKomputer}}</td>
+                                </tr> 
+                                <tr>
+                                  <td style="width: 75%">Pengantar Sistem Digital</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.Psd}}</td>
+                                </tr> 
+                                <tr>
+                                  <td style="width: 75%">Organisasi & Arsitektur Komputer</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.Orkom}}</td>
+                                </tr>  
+                                <tr>
+                                  <td style="width: 75%">Sistem Operasi</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.SistemOperasi}}</td>
+                                </tr>   
+                                <tr>
+                                  <td style="width: 75%">Praktikum Sistem Operasi</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.PrakSistemOperasi}}</td>
+                                </tr>  
+                                <tr>
+                                  <td style="width: 75%">Komunikasi Data & Pengantar Jaringan</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.Komdat}}</td>
+                                </tr> 
+                                <tr>
+                                  <td style="width: 75%">Jaringan Komputer</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.JaringanKomputer}}</td>
+                                </tr>   
+                                <tr>
+                                  <td style="width: 75%">Praktikum Jaringan Komputer</td>                                
+                                  <td align="center">{{mahasiswa.jaringans.PrakJaringanKomputer}}</td>
+                                </tr>         
+                                <tr>
+                                  <td style="width: 75%">Algoritma & Pemrograman</td>                                
+                                  <td align="center">{{mahasiswa.rpls.AlgoritmaDanPemrograman}}</td>
+                                </tr>                                               
+                              </table>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                              <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <tr>
+                                  <td style="width: 75%">Praktikum Algoritma & Pemrograman</td>                       
+                                  <td align="center">{{mahasiswa.rpls.PrakAlgoritmaDanPemrograman}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Pengantar Teknologi Informasi</td>                       
+                                  <td align="center">{{mahasiswa.rpls.PTI}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Struktur Data</td>                                
+                                  <td align="center">{{mahasiswa.rpls.StrukturData}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Sistem Basis Data</td>                                
+                                  <td align="center">{{mahasiswa.rpls.SistemBasisData}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Praktikum Sistem Basis Data</td>                                
+                                  <td align="center">{{mahasiswa.rpls.PrakSistemBasisData}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Pemrograman I</td>                                
+                                  <td align="center">{{mahasiswa.rpls.Pemrograman1}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Praktikum Pemrograman I</td>                                
+                                  <td align="center">{{mahasiswa.rpls.PrakPemrograman1}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Sistem Informasi</td>                                
+                                  <td align="center">{{mahasiswa.rpls.SistemInformasi}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Pemrograman II</td>                                
+                                  <td align="center">{{mahasiswa.rpls.Pemrograman2}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Praktikum Pemrograman II</td>                                
+                                  <td align="center">{{mahasiswa.rpls.PrakPemrograman2}}</td>
+                                </tr>                                   
+                                <tr>
+                                  <td style="width: 75%">Analisa & Desain Perangkat Lunak</td>                                
+                                  <td align="center">{{mahasiswa.rpls.Adpl}}</td>
+                                </tr>               
+                              </table> 
+                              <div align="right">
+                                <a href="{% url 'mahasiswa:edit_data' mahasiswa.id %}" class="btn btn-primary btn-sm ">Edit Data</a>
+
+                                <a href="{% url 'mahasiswa:detail' id=mahasiswa.id %}" class="btn btn-info btn-sm ">Detail Promethee</a>                              
+                              </div>   
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              {% if messages %}
+              {% for message in messages %}
+              <script>
+                toastr.success('{{message}}')
+              </script>
+              {% endfor %}
+              {% endif %}
+              </html>

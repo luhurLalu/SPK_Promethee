@@ -1,0 +1,73 @@
+{% load staticfiles %}
+<div class="card">
+  <div class="header">
+    <a class="btn btn-info btn-sm"><i class="material-icons" data-toggle="modal" data-target="#modal-default">person_add</i></a>           
+  </div>
+  <div class="body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+        <thead>
+          <th>No</th>                    
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Jenis Kelamin</th>
+          <th>Tanggal Lahir</th>
+          <th>Agama</th>            
+          <th>Action</th>     
+        </thead>
+        <tbody>
+          {% for mhs in mahasiswa %}
+          <tr>
+            <td >{{forloop.counter}}</td>                        
+            <td>{{mhs.nim}}</td>
+            <td style="text-transform:uppercase">{{mhs.nama}}</td>
+            <td>{{mhs.jenis_kelamin}}</td>
+            <td>{{mhs.tgl_lahir}}</td>
+            <td>{{mhs.agama}}</td>                  
+            <td align="center">                                                            
+
+              <a href="{% url 'mahasiswa:view_data' mhs.id %}" class="btn btn-primary btn-sm"><i class="material-icons">view_list</i></a>
+
+              <button class="btn btn-danger" data-toggle="modal" data-target="#myModal{{mhs.id}}">
+                <i class="material-icons">delete</i>
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal{{mhs.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modale" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Konfirmasi</h4>
+                    </div>
+                    <div class="modal-body">
+                      Yakin ingin hapus Mahasiswa : <b>{{mhs.nama}}</b> ?
+                    </div>
+                    <div class="modal-footer">                      
+                      <a class="btn btn-primary" data-dismiss="modal">
+                        <i class="fa fa-trash"></i> Keluar
+                      </a>
+                      <a href="{% url 'mahasiswa:delete' mhs.id %}" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Hapus
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+              </td>
+            </div>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<style>
+.modale{
+  width: 40%;
+}
+</style>
+<script src="{% static 'components/static/plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
+<script src="{% static 'components/static/plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
+

@@ -1,0 +1,44 @@
+{% extends 'layout/dashboard/index.html' %} 
+{% block content %}
+<title>Rekomendasi Alternatif Jurusan</title>
+<section class="content">
+    <div class="container-fluid">
+        <div class="breadcrumb breadcrumb-bg-grey">
+            <div align="center">
+            <h4><strong>Data Rekomendasi</strong></h4>
+        </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12">            
+                <div class="card">             
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable"   class="table table-bordered table-striped table-hover js-basic-example dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" >
+                                <thead>
+                                    <th>No</th>
+                                    <th>Nim</th>                 
+                                    <th>Nama</th>   
+                                    <th>Jenis Kelamin</th>                 
+                                    <th>Rekomendasi</th>                                       
+                                </thead>
+                                <tbody>
+                                    {% for dr in data_rekomendasi %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>                                        
+                                        <td>{{dr.0}}</td>                   
+                                        <td style="text-transform:uppercase">{{dr.1}}</td>
+                                        <td style="text-transform:uppercase">{{dr.2}}</td>
+                                        <td>{{dr.3}}</td>    
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

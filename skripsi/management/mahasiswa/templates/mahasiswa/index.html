@@ -1,0 +1,482 @@
+{% extends 'layout/dashboard/index.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<!-- Bootstrap Material Datetime Picker Css -->
+<link href="{% static 'components/static/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet" />
+        <section class="content">
+            <div class="container-fluid">
+                <div class="breadcrumb breadcrumb-bg-grey">
+                    <div align="center">
+                    <h4><strong>Data Mahasiswa</strong></h4>
+                </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12">                
+                        {% include 'mahasiswa/table.html' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog modal-dialogs">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title">Input Data Mahasiswa</h3>
+                        <hr/>
+                    </div>
+                    <div class="modal-body">
+                        <form  action="{% url 'mahasiswa:add_data' %}" method="POST" autocomplete="off">
+                            <!-- autocomplete="off"  -->
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3>Biodata Mahasiswa</h3>                            
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="number" class="form-control" name="nim" required>
+                                            <label class="form-label">Nim Mahasiswa</label>
+                                        </div>
+                                        <br/>
+
+                                    </div>
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="nama" style="text-transform:uppercase" required>
+                                            <label class="form-label">Nama Mahasiswa</label>
+                                        </div>
+                                    </div>     
+                                    <br/>                       
+
+                                    <div class="form-group form-float">
+                                        <strong>Jenis Kelamin :</strong>
+                                        <input type="radio" name="jenis_kelamin" id="LAKI-LAKI" class="with-gap" value="LAKI-LAKI">
+                                        <label for="LAKI-LAKI">Laki-Laki</label>
+
+                                        <input type="radio" name="jenis_kelamin" id="PEREMPUAN" class="with-gap" value="PEREMPUAN">
+                                        <label for="PEREMPUAN" class="m-l-20">Perempuan</label>
+                                    </div>   
+                                    <br/>  
+                                    <div class="form-group form-float">
+                                        <strong>Tanggal Lahir</strong>                                
+                                        <div class="input-group date form_date col-md-5 form-line" data-date="" data-date-format="mm/dd/yyyy" data-link-field="dtp_input2" data-link-format="mm/dd/yyyy">
+                                            <input name="tgl_lahir" class="form-control" size="16" type="text" value="" required="">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                        <!-- <input type="hidden" id="dtp_input2" value="" /><br/> -->
+                                    </div>                      
+
+                                    <br/>
+                                    <div class="form-group">
+                                        <strong>Agama</strong>
+                                        <br/>
+                                        <select class="form-control show-tick form-line" name="agama">
+                                            <option value="" >-</option>
+                                            <option value="ISLAM">ISLAM</option>
+                                            <option value="KRISTEN PROTESTAN">KRISTEN PROTESTAN</option>
+                                            <option value="KATHOLIK">KATHOLIK</option>
+                                            <option value="HINDU">HINDU</option>
+                                            <option value="BUDHA">BUDHA</option>
+                                            <option value="KONGHUCU">KONGHUCU</option>
+                                        </select>                               
+                                    </div>                                                    
+                                    <br>
+                                    <h3>Tes Dasar</h3>
+                                    <hr>
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="number" class="form-control" name="NilaiMultimedia" required>
+                                            <label class="form-label">Tes Multimedia</label>
+                                        </div>  
+                                    </div>                        
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="number" class="form-control" name="NilaiJaringan" required>
+                                            <label class="form-label">Tes Jaringan</label>
+                                        </div>  
+                                    </div>                        
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="number" class="form-control" name="NilaiRPL" required>
+                                            <label class="form-label">Tes RPL</label>
+                                        </div>  
+                                    </div>                        
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>Nilai Akademik</h3>
+                                    <hr>
+                                    <div class="form-group">
+                                        <span>Interaksi Manusia Dengan Komputer</span>
+                                        <select class="form-control form-line" name="IMK">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Artificial Intelligent</span>
+                                        <select class="form-control form-line" name="ArtificialIntelligent">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Grafika Komputer</span>
+                                        <select class="form-control form-line" name="GrafikaKomputer">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>      
+                                    <div class="form-group">
+                                        <span>Praktikum Grafika Komputer</span>
+                                        <select class="form-control form-line" name="PrakGrafikaKomputer">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>      
+                                    <div class="form-group">
+                                        <span>Pengantar Sistem Digital</span>
+                                        <select class="form-control form-line" name="Psd">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>                                                       
+                                    <div class="form-group">
+                                        <span>Organisasi Dan Arsitektur Komputer</span>
+                                        <select class="form-control form-line" name="Orkom">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>      
+                                    <div class="form-group">
+                                        <span>Sistem Operasi</span>
+                                        <select class="form-control form-line" name="SistemOperasi">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>      
+                                    <div class="form-group">
+                                        <span>Praktikum Sistem Operasi</span>
+                                        <select class="form-control form-line" name="PrakSistemOperasi">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>      
+                                    <div class="form-group">
+                                        <span>Komunikasi Data Dan Pengantar Jaringan</span>
+                                        <select class="form-control form-line" name="Komdat">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>                          
+                                    <div class="form-group">
+                                        <span>Jaringan Komputer</span>
+                                        <select class="form-control form-line" name="JaringanKomputer">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>                          
+                                    <div class="form-group">
+                                        <span>Praktikum Jaringan Komputer</span>
+                                        <select class="form-control form-line" name="PrakJaringanKomputer">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>                          
+                                    <div class="form-group">
+                                        <span>Algoritma Dan Pemrograman</span>
+                                        <select class="form-control form-line" name="AlgoritmaDanPemrograman">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h3><br></h3>
+                                    <hr>                            
+                                    <div class="form-group">
+                                        <span>Praktikum Algoritma & Pemrograman</span>
+                                        <select class="form-control form-line" name="PrakAlgoritmaDanPemrograman">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Pengantar Teknologi Informasi</span>
+                                        <select class="form-control form-line" name="PTI">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Struktur Data</span>
+                                        <select class="form-control form-line" name="StrukturData">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Sistem Basis Data</span>
+                                        <select class="form-control form-line" name="SistemBasisData">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Praktikum Sistem Basis Data</span>
+                                        <select class="form-control form-line" name="PrakSistemBasisData">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Pemrograman 1</span>
+                                        <select class="form-control form-line" name="Pemrograman1">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Praktikum Pemrograman 1</span>
+                                        <select class="form-control form-line" name="PrakPemrograman1">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Sistem Informasi</span>
+                                        <select class="form-control form-line" name="SistemInformasi">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Pemrograman 2</span>
+                                        <select class="form-control form-line" name="Pemrograman2">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Praktikum Pemrograman 2</span>
+                                        <select class="form-control form-line" name="PrakPemrograman2">
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Analisa Dan Desain Perangkat Lunak</span>
+                                        <select class="form-control form-line" name="Adpl" >
+                                            <option value="-">-</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                        </select>                               
+                                    </div>
+                                    <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;">
+                                        <div align="center" class="absolute" style="top: 0; right: 8px; transform: translateY(30%);">                                    
+                                            <button type="reset" class="btn btn-default">Reset</button>                              
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 8px;">save</button>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+    .modal-dialogs{
+      width: 90%;
+      border-radius:10%;
+  }
+
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example1').DataTable( {
+          "lengthMenu": [[5, 10, 25, 50, ], [5, 10, 25, 50,]]
+      } );
+    } );
+</script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language:  'id',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'id',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
+
+<!-- Bootstrap Datepicker Plugin Js -->
+<!-- <script src="{% static 'components/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script> -->
+{% endblock %}

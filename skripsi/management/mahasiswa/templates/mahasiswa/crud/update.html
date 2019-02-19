@@ -1,0 +1,515 @@
+{% load staticfiles %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SPK | Mahasiswa</title>
+    {% include 'layout/dashboard/head.html' %}
+
+    <link href="{% static 'components/static/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet" />
+</head>
+
+<body class="theme-red">
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    {% include 'layout/dashboard/header.html' %}
+    {% include 'layout/dashboard/sidebar.html' %}
+
+    <section class="content">
+        <div class="container-fluid">    
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <section class="content-header">    
+                        <ol class="breadcrumb breadcrumb-bg-grey">
+                            <li>
+                                <a href="{% url 'mahasiswa:mahasiswa' %}">
+                                    <i class="material-icons">person</i>Mahasiswa</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:javascript:history.go(-1)">
+                                        <i class="material-icons">view_list</i>Detail</a></li>                                
+                                    </li>
+                                    <li class="active">{{mahasiswa.nama}}</li>
+                                </ol>
+                            <!-- </section> -->
+                            <div class="card">
+                                <div class="body">
+                                    <form action="{% url 'mahasiswa:update_data' mahasiswa.id %}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                        {% csrf_token %}
+                                        <div class="row">                    
+                                            <div class="col-md-4">
+                                                <h3>Biodata Mahasiswa</h3>                            
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input value="{{mahasiswa.nim}}" type="number" class="form-control" name="nim" required>
+                                                        <label class="form-label">Nim Mahasiswa</label>
+                                                    </div>
+                                                    <br/>
+
+                                                </div>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input value="{{mahasiswa.nama}}" type="text" class="form-control" name="nama" style="text-transform:uppercase" required>
+                                                        <label class="form-label">Nama Mahasiswa</label>
+                                                    </div>
+                                                </div>     
+                                                <br/>                       
+
+                                                <div class="form-group form-float">
+                                                    <strong>Jenis Kelamin :</strong>
+                                                    <input type="radio" name="jenis_kelamin" id="LAKI-LAKI" class="with-gap" value="LAKI-LAKI"
+                                                    {% if mahasiswa.jenis_kelamin == 'LAKI-LAKI' %} checked {% endif%}>
+                                                    <label for="LAKI-LAKI">Laki-Laki</label>
+
+                                                    <input type="radio" name="jenis_kelamin" id="PEREMPUAN" class="with-gap" value="PEREMPUAN"
+                                                    {% if mahasiswa.jenis_kelamin == 'PEREMPUAN' %} checked {% endif%}>
+                                                    <label for="PEREMPUAN" class="m-l-20">Perempuan</label>
+                                                </div>   
+                                                <br/>  
+
+                                                <div class="form-group form-float">
+                                                    <strong>Tanggal Lahir</strong>
+                                                    <div class="input-group date form_date col-md-5 form-line" data-date="" data-date-format="mm/dd/yyyy" data-link-field="dtp_input2" data-link-format="mm/dd/yyyy">
+                                                        <input name="tgl_lahir" class="form-control" size="16" type="text" value="{{mahasiswa.tgl_lahir|date:"m/d/y"}}" id="date">
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <input type="hidden" id="dtp_input2" value="" /><br/>
+                                                </div>
+                                                <br/>
+                                                <div class="form-group">
+                                                    <strong>Agama</strong>
+                                                    <br/>
+                                                    <select class="form-control show-tick form-line" name="agama">
+                                                        <!-- <option value="" >--</option> -->
+
+                                                        <option required {% if mahasiswa.agama == 'ISLAM' %} checked {% endif %}>ISLAM</option>
+
+                                                        <option value="KRISTEN PROTESTAN" {% if mahasiswa.agama == 'KRISTEN PROTESTAN' %} selected {% endif %}>KRISTEN PROTESTAN</option>
+
+                                                        <option value="KATHOLIK" {% if mahasiswa.agama == 'KATHOLIK' %} selected {% endif %}>KATHOLIK</option>
+
+                                                        <option value="HINDU" {% if mahasiswa.agama == 'HINDU' %} selected {% endif %}>HINDU</option>
+
+                                                        <option value="BUDHA" {% if mahasiswa.agama == 'BUDHA' %} selected {% endif %}>BUDHA</option>
+
+                                                        <option value="KONGHUCU" {% if mahasiswa.agama == 'KONGHUCU' %} selected {% endif %}>KONGHUCU</option>
+                                                    </select>                               
+                                                </div>                                                    
+                                                <br>
+                                                <h3>Tes Dasar</h3>
+                                                <hr>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">                                    
+                                                        <label class="form-label">Tes Multimedia</label>
+                                                        <input type="number" class="form-control" name="NilaiMultimedia" value="{{mahasiswa.tesdasars.NilaiMultimedia}}" required>
+                                                    </div>  
+                                                </div>                        
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="number" class="form-control" name="NilaiJaringan" value="{{mahasiswa.tesdasars.NilaiJaringan}}" required>
+                                                        <label class="form-label">Tes Jaringan</label>
+                                                    </div>  
+                                                </div>                        
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="number" class="form-control" name="NilaiRPL" value="{{mahasiswa.tesdasars.NilaiRPL}}"required>
+                                                        <label class="form-label">Tes RPL</label>
+                                                    </div>  
+                                                </div>                        
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h3>Nilai Akademik</h3>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <span>Interaksi Manusia Dengan Komputer</span>
+                                                    <select class="form-control" name="IMK"> 
+                                                        <option value="-" {% if mahasiswa.multimedias.IMK == '-' %} selected {% endif %}>-</option>             
+                                                        <option value="A" {% if mahasiswa.multimedias.IMK == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.multimedias.IMK == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.multimedias.IMK == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.multimedias.IMK == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.multimedias.IMK == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.multimedias.IMK == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.multimedias.IMK == 'E' %} selected {% endif %}>E</option>                         
+                                                    </select>                               
+                                                </div> 
+                                                <div class="form-group">
+                                                    <span>Artificial Intelligent</span>
+                                                    <select class="form-control" name="ArtificialIntelligent">
+                                                        <option value="A" {% if mahasiswa.rpls.ArtificialIntelligent == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.ArtificialIntelligent == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.ArtificialIntelligent == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.ArtificialIntelligent == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.ArtificialIntelligent == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.ArtificialIntelligent == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.ArtificialIntelligent == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.ArtificialIntelligent == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Grafika Komputer</span>
+                                                    <select class="form-control" name="GrafikaKomputer">
+                                                        <option value="A" {% if mahasiswa.multimedias.GrafikaKomputer == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.multimedias.GrafikaKomputer == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.multimedias.GrafikaKomputer == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.multimedias.GrafikaKomputer == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.multimedias.GrafikaKomputer == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.multimedias.GrafikaKomputer == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.multimedias.GrafikaKomputer == 'E' %} selected {% endif %}>-</option>
+                                                        <option value="-" {% if mahasiswa.multimedias.GrafikaKomputer == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>      
+                                                <div class="form-group">
+                                                    <span>Praktikum Grafika Komputer</span>
+                                                    <select class="form-control" name="PrakGrafikaKomputer">
+                                                        <option value="A" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.multimedias.PrakGrafikaKomputer == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.multimedias.PrakGrafikaKomputer == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>      
+                                                <div class="form-group">
+                                                    <span>Pengantar Sistem Digital</span>
+                                                    <select class="form-control" name="Psd">
+                                                        <option value="A" {% if mahasiswa.jaringans.Psd == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.Psd == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.Psd == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.Psd == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.Psd == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.Psd == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.Psd == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.Psd == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>                                                       
+                                                <div class="form-group">
+                                                    <span>Organisasi Dan Arsitektur Komputer</span>
+                                                    <select class="form-control" name="Orkom">
+                                                        <option value="A" {% if mahasiswa.jaringans.Orkom == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.Orkom == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.Orkom == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.Orkom == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.Orkom == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.Orkom == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.Orkom == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.Orkom == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>      
+                                                <div class="form-group">
+                                                    <span>Sistem Operasi</span>
+                                                    <select class="form-control" name="SistemOperasi">
+                                                        <option value="A" {% if mahasiswa.jaringans.SistemOperasi == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.SistemOperasi == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.SistemOperasi == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.SistemOperasi == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.SistemOperasi == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.SistemOperasi == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.SistemOperasi == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.SistemOperasi == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>      
+                                                <div class="form-group">
+                                                    <span>Praktikum Sistem Operasi</span>
+                                                    <select class="form-control" name="PrakSistemOperasi">
+                                                        <option value="A" {% if mahasiswa.jaringans.PrakSistemOperasi == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.PrakSistemOperasi == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.PrakSistemOperasi == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.PrakSistemOperasi == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.PrakSistemOperasi == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.PrakSistemOperasi == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.PrakSistemOperasi == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.PrakSistemOperasi == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>      
+                                                <div class="form-group">
+                                                    <span>Komunikasi Data Dan Pengantar Jaringan</span>
+                                                    <select class="form-control" name="Komdat">
+                                                        <option value="A" {% if mahasiswa.jaringans.Komdat == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.Komdat == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.Komdat == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.Komdat == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.Komdat == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.Komdat == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.Komdat == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.Komdat == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>                          
+                                                <div class="form-group">
+                                                    <span>Jaringan Komputer</span>
+                                                    <select class="form-control" name="JaringanKomputer">
+                                                        <option value="A" {% if mahasiswa.jaringans.JaringanKomputer == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.JaringanKomputer == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.JaringanKomputer == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.JaringanKomputer == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.JaringanKomputer == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.JaringanKomputer == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.JaringanKomputer == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.JaringanKomputer == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>                          
+                                                <div class="form-group">
+                                                    <span>Praktikum Jaringan Komputer</span>
+                                                    <select class="form-control" name="PrakJaringanKomputer">
+                                                        <option value="A" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.jaringans.PrakJaringanKomputer == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.jaringans.PrakJaringanKomputer == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>   
+                                                <div class="form-group">
+                                                    <span>Algoritma Dan Pemrograman</span>
+                                                    <select class="form-control" name="AlgoritmaDanPemrograman">
+                                                        <option value="A" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.AlgoritmaDanPemrograman == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>                       
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <h3><br></h3>
+                                                <hr>                            
+                                                <div class="form-group">
+                                                    <span>Praktikum Algoritma & Pemrograman</span>
+                                                    <select class="form-control" name="PrakAlgoritmaDanPemrograman">
+                                                        <option value="A" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.PrakAlgoritmaDanPemrograman == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Pengantar Teknologi Informasi</span>
+                                                    <select class="form-control" name="PTI">
+                                                        <option value="A" {% if mahasiswa.rpls.PTI == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.PTI == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.PTI == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.PTI == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.PTI == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.PTI == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.PTI == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.PTI == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Struktur Data</span>
+                                                    <select class="form-control" name="StrukturData">
+                                                        <option value="A" {% if mahasiswa.rpls.StrukturData == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.StrukturData == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.StrukturData == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.StrukturData == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.StrukturData == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.StrukturData == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.StrukturData == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.StrukturData == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Sistem Basis Data</span>
+                                                    <select class="form-control" name="SistemBasisData">
+                                                        <option value="A" {% if mahasiswa.rpls.SistemBasisData == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.SistemBasisData == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.SistemBasisData == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.SistemBasisData == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.SistemBasisData == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.SistemBasisData == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.SistemBasisData == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.SistemBasisData == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Praktikum Sistem Basis Data</span>
+                                                    <select class="form-control" name="PrakSistemBasisData">
+                                                        <option value="A" {% if mahasiswa.rpls.PrakSistemBasisData == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.PrakSistemBasisData == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.PrakSistemBasisData == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.PrakSistemBasisData == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.PrakSistemBasisData == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.PrakSistemBasisData == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.PrakSistemBasisData == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.PrakSistemBasisData == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Pemrograman 1</span>
+                                                    <select class="form-control" name="Pemrograman1">
+                                                        <option value="A" {% if mahasiswa.rpls.Pemrograman1 == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.Pemrograman1 == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.Pemrograman1 == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.Pemrograman1 == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.Pemrograman1 == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.Pemrograman1 == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.Pemrograman1 == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.Pemrograman1 == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Praktikum Pemrograman 1</span>
+                                                    <select class="form-control" name="PrakPemrograman1">
+                                                        <option value="A" {% if mahasiswa.rpls.PrakPemrograman1 == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.PrakPemrograman1 == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.PrakPemrograman1 == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.PrakPemrograman1 == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.PrakPemrograman1 == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.PrakPemrograman1 == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.PrakPemrograman1 == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.PrakPemrograman1 == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Sistem Informasi</span>
+                                                    <select class="form-control" name="SistemInformasi">
+                                                        <option value="A" {% if mahasiswa.rpls.SistemInformasi == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.SistemInformasi == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.SistemInformasi == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.SistemInformasi == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.SistemInformasi == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.SistemInformasi == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.SistemInformasi == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.SistemInformasi == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Pemrograman 2</span>
+                                                    <select class="form-control" name="Pemrograman2">
+                                                        <option value="A" {% if mahasiswa.rpls.Pemrograman2 == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.Pemrograman2 == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.Pemrograman2 == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.Pemrograman2 == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.Pemrograman2 == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.Pemrograman2 == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.Pemrograman2 == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.Pemrograman2 == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Praktikum Pemrograman 2</span>
+                                                    <select class="form-control" name="PrakPemrograman2">
+                                                        <option value="A" {% if mahasiswa.rpls.PrakPemrograman2 == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.PrakPemrograman2 == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.PrakPemrograman2 == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.PrakPemrograman2 == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.PrakPemrograman2 == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.PrakPemrograman2 == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.PrakPemrograman2 == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.PrakPemrograman2 == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>Analisa Dan Desain Perangkat Lunak</span>
+                                                    <select class="form-control" name="Adpl" >
+                                                        <option value="A" {% if mahasiswa.rpls.Adpl == 'A' %} selected {% endif %}>A</option>
+                                                        <option value="B+" {% if mahasiswa.rpls.Adpl == 'B+' %} selected {% endif %}>B+</option>
+                                                        <option value="B" {% if mahasiswa.rpls.Adpl == 'B' %} selected {% endif %}>B</option>
+                                                        <option value="C+" {% if mahasiswa.rpls.Adpl == 'C+' %} selected {% endif %}>C+</option>
+                                                        <option value="C" {% if mahasiswa.rpls.Adpl == 'C' %} selected {% endif %}>C</option>
+                                                        <option value="D" {% if mahasiswa.rpls.Adpl == 'D' %} selected {% endif %}>D</option>
+                                                        <option value="E" {% if mahasiswa.rpls.Adpl == 'E' %} selected {% endif %}>E</option>
+                                                        <option value="-" {% if mahasiswa.rpls.Adpl == '-' %} selected {% endif %}>-</option>
+                                                    </select>                               
+                                                </div>
+                                                <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;">
+                                                    <div align="center" class="absolute" style="top: 0; right: 8px; transform: translateY(30%);">
+
+                                                        <button type="reset" class="btn btn-default">Reset</button>                              
+                                                        <button type="submit" class="btn btn-primary" style="margin-left: 8px;">save</button>                            
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </ol>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if messages %}
+    {% for message in messages %}
+
+    <script>
+        toastr.success('{{message}}')                    
+    </script>
+    {% endfor %}
+    {% endif %}
+
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example1').DataTable( {
+          "lengthMenu": [[5, 10, 25, 50, ], [5, 10, 25, 50,]]
+      } );
+    } );
+</script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language:  'id',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'id',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
+
+<script src="{% static 'components/static/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+</body>
+</html>
